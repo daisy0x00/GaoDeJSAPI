@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+		<meta name = "viewport" content = "initial-scale = 1.0,user-scalable = no,width = device-width">
+		<!--viewport（显示窗口），content里面的内容意思是：显示的文字和图形的初始比例是1.0；显示窗口的宽度是客户端的屏幕宽度，即满屏-->
+		<title>带功能控件的地图</title>
+		<link rel = "stylesheet" href = "http://cache.amap.com/lbs/static/main1119.css"/>
+		<script src = "http://cache.amap.com/lbs/static/es5.min.js"></script>
+		<script src = "http://webapi.amap.com/maps?v=1.4.6&key=您申请的key值&&plugin=AMap.Scale,AMap.OverView,AMap.ToolBar"></script> 
+	</head>
+	<body>
+		<div id = "container"></div>
+		<!--后面的id或者class,你可以理解为这个div的名字，因为你写css或者js的时候需要用这些来精确到某个或者某几个div-->
+		<div class = 'button-group' style = "background-color:#0d9bf2;right:20px">
+			<input type = "checkbox" onclick = "toggleScale(this)"/>比例尺
+			<input type = "checkbox" id = "toolbar" onclick = "toggleToolBar(this)"/>工具条
+			<input type = "checkbox" id = "toolbarDirection" disabled onclick = "toggleToolBarDirection(this)"/>工具条方向盘
+			<input type = "checkbox" id = "toolbarRuler" disabled onclick = "toggleToolBarRuler(this)"/>工具条标尺
+			<input type = "checkbox" id = "overview" onclick = "toggleOverviewShow(this)"/>显示鹰眼
+			<input type = "checkbox" id = "overviewOpen" disabled onclick = "toggleOverViewOpen(this)"/>展开鹰眼
+		</div>
+		<script>
+			var scale = new AMap.Scale({
+				visible:false
+			});
+			toolBar = new AMap.ToolBar({
+				visible:false
+			});
+			overView = new AMap.OverView({
+				visible:false
+			});
+			map = new AMap.Map("container",{
+				resizeEnable:true
+			});
+			map.addControl(scale);
+			map.addControl(toolBar);
+			map.addControl(overView);
+			function toggleScale(checkbox){
+				if(checkbox.checked){
+					scale.show();
+				}else{
+					scale.hide();
+				}
+			}
+
+			function toggleToolBar(checkbox){
+				if(checkbox.checked){
+					showToolBar();
+					showToolBarDirection();
+					showToolBarRuler();
+				}else{
+					hideToolBar();
+					hideToolBarDirection();
+					hideToolBarRuler();
+				}
+			}
+
+			function toggleToolBarDirection(checkbox){
+				if(checkbox checked){
+					toolBar.showDirection()
+				}else{
+					toolBar.hideDirection()
+				}
+			}
+
+			function toggleToolBarRuler(checkbox){
+				if(checkbox.checked){
+					toolBar.showRuler();
+				}else{
+					toolBar.hideRuler();
+				}
+			}
+
+			function toggleOverViewShow(checkbox){
+				if(checkbox checked){
+					overView.show();
+					document.getElementById("overviewOpen").disabled = false;
+				}else{
+					overView.hide();
+					document.getElementById("overviewOpen").disabled = true;
+				}
+			}
+
+			function toggleOverViewOpen(checkbox){
+				if(checkbox.checked){
+					overView.open();
+				}else{
+					overView.close();
+				}
+			}
+
+			function showToolBar(){
+				document.getElementById("toolbar").checked = true;
+				document.getElementById("toolbarDirection").disabled = false;
+				document.getElementById("toolbarRuler").disabled = false;
+				toolBar.show();
+			}
+
+			function hideToolBar(){
+				document.getElementById("toolbar").checked = false;
+				document.getElementById("toolbarDirection").disabled = true;
+				document.getElementById("toolbarRuler").disabled = true;
+				toolBar.hide();
+			}
+
+			function showToolBarDirection(){
+				document.getElementById("toolbarDirection").checked = true;
+				toolBar.showDirection();
+			}
+
+			function showToolBarRuler(){
+				document.getElementById("toolbarRuler").checked = true;
+				toolBar.showRuler();
+			}
+
+			function hideToolBarRuler(){
+				document.getElementById("toolbarRuler").checked = false;
+				toolBar.hideRuler();
+			}
+
+
+		</script>
+
+	</body>
+</html>
