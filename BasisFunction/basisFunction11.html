@@ -1,0 +1,26 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<meta http-equiv = "X-UA-Compatible" content = "IE = edge">
+		<meta name = "viewport" content = "initial-scale = 1.0,user-scalable = no,width = device-width">
+		<title>获取地图缩放级别</title>
+		<link rel = "stylesheet" href = "http://cache.amap.com/lbs/static/main1119.css"/>
+		<script src = "http://webapi.amap.com/maps?v=1.4.6&key=22d3816e107f199992666d6412fa0691"></script> 
+		<script type = "text/javascript" src = "http://cache.amap.com/lbs/static/addToolbar.js"></script> 
+	</head>
+
+	<body>
+		<div id = "container"></div>
+		<div id = "tip">可以缩放地图，得到缩放级别哦！<br><span id = "info"></span></div>
+		<script>
+			var map = new AMap.Map('container',{
+				resizeEnable: true
+			});
+			AMap.event.addListener(map,'zoomend',function(){
+				document.getElementById('info').innerHTML = '当前缩放级别： ' + map.getZoom();
+			});
+		</script>
+	</body>
+</html>
