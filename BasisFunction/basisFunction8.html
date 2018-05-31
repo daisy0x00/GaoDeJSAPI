@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset = "utf-8">
+		<meta http-equiv = "X-UA-Compatible" content = "IE = edge">
+		<meta name = "viewport" content = "initial-scale = 1.0,user-scalable = no,width = device-width">
+		<title>设置地图状态</title>
+		<link rel = "stylesheet" href = "http://cache.amap.com/lbs/static/main1119.css"/>
+		<style>
+			#hotspot{
+				white-space: nowrap;
+				font-size: 12px;
+				border: 1px solid #ccc;
+				padding: 4px;
+				background-color: #fff;
+			}
+		</style>
+		<script src = "http://cache.amap.com/lbs/static/es5.min.js"></script> 
+		<script src = "http://webapi.amap.com/maps?v=1.4.6&key=22d3816e107f199992666d6412fa0691"></script> 
+		<script type = "text/javascript" src = "http://cache.amap.com/lbs/static/addToolbar.js"></script>
+	</head>
+
+	<body>
+		<div id = "container"></div>
+		<div class = 'button-group' style = "background-color: #0d9bf2">
+			<input type = "checkbox" onclick = "toggleDrag(this)">允许拖拽地图
+			<input type = "checkbox" onclick = "toggleKeyboard(this)">允许键盘平移
+			<input type = "checkbox" onclick = "toggleDoubleClickZoom(this)">允许双击放大地图
+			<input type = "checkbox" onclick = "toggleIsHotspot(this)">允许叠加地图热点
+		</div>
+
+		<script>
+			var map,hotSpotMarker;
+			map = new AMap.Map("container",{
+				resizeEnable: true,
+				dragEnable: false,
+				keyboardEnable: false,
+				doubleClickZoom: false,
+				zoom: 13
+			});
+			function toggleDrag(checkbox){
+				if(checkbox.checked){
+					map.setStatus({dragEnable: true});
+				}else{
+					map.setStatus({dragEnable: false});
+				}
+			}
+			function toggleKeyboard(checkbox){
+				if(checkbox.checked){
+					map.setStatus({keyboardEnable: true});
+				}else{
+					map.setStatus({keyboardEnable: false});
+				}
+			}
+			function toggleDoubleClickZoom(checkbox){
+				if(checkbox.checked){
+					map.setStatus({doubleClickZoom: true});
+				}else{
+					map.setStatus({doubleClickZoom: false});
+				}
+			}
+			function toggleIsHotspot(checkbox){
+				if(checkbox.checked){
+					map.setStatus({isHotspot: true});
+				}else{
+					map.setStatus({isHotspot: false});
+				}
+			}
+			//监听热点点击
+			map.on("hotspotclick",function(e){
+				if(hotSpotMarker){
+					hotSpotMarker.setMap(null);
+				}
+				hotSpotMarker = new AMap.Marker({
+					position: e.lnglat,
+					map:map,
+					content: '<div id = "hotspot">' + e.name + '</div>'
+				});
+			})
+		</script>
+	</body>
+</html>

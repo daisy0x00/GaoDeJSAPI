@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset = "utf-8">
+		<meta http-equiv = "X-UA-Compatible" content = "IE = edge">
+		<meta name = "viewport" content = "initial-scale = 1.0,user-scalable = no,width = device-width">
+		<title>限制地图显示范围</title>
+		<link rel = "stylesheet" href = "http://cache.amap.com/lbs/static/main1119.css"/>
+		<script src = "http://webapi.amap.com/maps?v=1.4.6&key=22d3816e107f199992666d6412fa0691"></script> 
+		<script type = "text/javascript" src = "http://cache.amap.com/lbs/static/addToolbar.js"></script> 
+	</head>
+
+	<body>
+		<div id = "container"></div>
+		<div id = "tip">设置后拖动地图试试哦！</div>
+		<div class = "button-group">
+			<input type = "button" class = "button" onclick = "setLimitBounds()" value = "限定区域到当前视野"/>
+			<input type = "button" class = "button" onclick = "getLimitBounds()" value = "获取限制的区域"/>
+			<input type = "button" class = "button" onclick = "clearLimitBounds()" value = "清楚区域限制"/>
+		</div>
+		<script>
+			var map = new AMap.Map("container",{
+				resizeEnable: true
+			});
+			map.plugin(["AMap.CitySearch"],function(){
+				var citysearch = new AMap.CitySearch();
+				citysearch.getLocalCity();
+				AMap.event.addListener(citysearch,"complete",function(result){
+					var citybounds;
+					if(result && result.city && result.bounds){
+						citybounds = result.bounds;
+						map.setBounds(citybounds);
+					}
+				});
+			});
+			function setLimitBounds(){
+				map.setLimitBounds(map.getBounds());
+			}
+			function getLimitBounds(){
+				var limitBounds = map.getLimitBounds();
+				if(limitBounds){
+					var tip = [];
+					tip.push('限制区域：\n西南坐标[' + limitBounds.southwest.lng + ',' + limitBounds.southwest.lat + ']\n')
+					tip.push('东北坐标[' + limitBounds.northeast.lng + ',' + limitBounds.northeast.lat + ']')
+					alert(tip.join(''));
+				}else{
+					alert('未设置限制区域');
+				}
+			}
+			function clearLimitBounds() {
+				map.clearLimitBounds();
+			}
+		</script>
+	</body>
+</html>

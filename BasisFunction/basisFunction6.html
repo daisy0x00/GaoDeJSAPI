@@ -1,3 +1,36 @@
 <!doctype html>
 <html>
+	<head>
+		<meta charset = "utf-8">
+		<meta http-equiv = "X-UA-Compatible" content = "IE = edge">
+		<meta name = "viewport" content = "initial-scale = 1.0,user-scalable = no,width = device-width">
+		<title>改变地图中心点及缩放级别</title>
+		<link rel = "stylesheet" href = "http://cache.amap.com/lbs/static/main1119.css">
+		<script src = "http://webapi.amap.com/maps?v=1.4.6&key=22d3816e107f199992666d6412fa0691"></script> 
+		<script type = "text/javascript" src = "http://cache.amap.com/lbs/static/addToolbar.js"></script> 
+	</head>
+
+	<body>
+		<div id = "container"></div>
+		<div class = "button-group">
+			<input id = "setCenter" type = "button" class = "button" value = "改变地图中心 点及缩放级别"/>
+		</div>
+
+		<script>
+			var map = new AMap.Map('container',{
+				resizeEnable: true,
+				center: [116.397428,39.90923],
+				zoom: 13
+			});
+			AMap.event.addDomListener(document.getElementById('setCenter'),'click',function(){
+				//设置缩放级别和中心点
+				map.setZoomAndCenter(14,[116.205467,39.907761]);
+				//在新中心点 添加marker
+				var marker = new AMap.Marker({
+					map: map,
+					position: [116.205467,39.907761]
+				});
+			})
+		</script>
+	</body>
 </html>
