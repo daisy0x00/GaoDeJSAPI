@@ -33,5 +33,40 @@
 	</head>
 
 	<body>
+		<div id = "container"></div>
+		<div id = "tip">鼠标点击热点试试 </div>
+		<script>
+			var map = new AMap.Map('container',{
+				resizeEnable: true,
+				center: [116.397428,39.90923],
+				zoom: 13,
+				isHotspot: true
+			});
+			var placeSearch = new AMap.PlaceSearch(); //构造地点查询类
+			var infoWindow = new AMap.AdvancedInfoWindow({});
+			map.on('hotspotclick',function(result) {
+				placeSearch.getDetails(result.id,function(status,result){
+					if (status === 'complete' && result.info === 'OK') {
+						placeSearch_CallBack(result);
+					}
+				});
+			});
+			//回调函数
+			function placeSearch_CallBack(data) {
+				//infoWindow.open(map,result.lnglat);
+				var poiArr = data.poiList.pois;
+				var location = poiArr[0].location;
+				infoWindow.setContent(createContent(poiArr[0]));
+				infoWindow.open(map,location);
+			}
+			function createContent(poi){
+				var s = [];
+				s.push('<div class = "info-title">' + poi.name + '</div><div class = "info-content">' + "地址： " + poi.address);
+				s.push("电话： " + poi.tel);
+				s.push("类型： " + poi.type);
+				s.push('<div>');
+				return s.join("<br>");
+			}
+		</script>
 	</body>
 </html>

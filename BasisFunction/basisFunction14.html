@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<meta http-equiv = "X-UA-Compatible" content = "IE = edge">
+		<meta name = "viewport" content = "initial-scale = 1.0,user-scalable = no,width = device-width">
+		<title>设置鼠标样式</title>
+		<link rel = "stylesheet" href = "http://cache.amap.com/lbs/static/main1119.css"/>
+		<script type = "text/javascript" src = "http://webapi.amap.com/maps?v=1.4.6&key=22d3816e107f199992666d6412fa0691"></script> 
+		<script type = "text/javascript" src = "http://cache.amap.com/lbs/static/addToolbar.js"></script> 
+	</head>
+	<body>
+		<div id = "container"></div>
+		<div class = "button-group">
+			<input type = "button" class = "button" value = "自定义鼠标样式图标" onClick = "switchCursor()"/>
+		</div>
+		<div id = "tip">
+			鼠标移入地图上，可看到变化后的鼠标样式。可以使用CSS默认样式或者自定义图标
+		</div>
+		<script type = "text/javascript">
+			//初始化地图对象。加载地图
+			var map = new AMap.Map("container",{
+				resizeEnable: true
+			});
+			//使用CSS默认样式定义地图上的鼠标样式
+			map.setDefaultCursor("pointer");
+			//自定义鼠标样式图标
+			function switchCursor() {
+					map.setDefaultCursor("crosshair");
+			}
+		</script>
+	</body>
+</html>
